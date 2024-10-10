@@ -1,0 +1,70 @@
+{% extends 'principal.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+<section class="section">
+        <div class="container">
+            <form action="" method="GET">
+                <div class="form-group row p-3">
+                    <label class="col-sm-2 col-form-label">Nome do fornecedor: </label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" name="buscar" value="{{ request.GET.buscar }}"
+                               placeholder="Digite o nome do fornecedor">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary">
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+            </form>
+            {% if object_list %}
+
+                <div class="card-body">
+                    <h3 class="text-center">Fornecedores Cadastrados</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-success">
+                                <th>Nome</th>
+                                <th>Cnpj</th>
+                                <th>Fone</th>
+                                <th style="width: 100px; text-align: center">Ações</th>
+                            </thead>
+                            <tbody>
+
+                            {% for fornecedor in object_list %}
+
+                                    <tr>
+                                        <td> {{ fornecedor.nome }} </td>
+                                        <td> {{ fornecedor.cnpj }} </td>
+                                        <td> {{ fornecedor.fone }} </td>
+
+                                        <td style="text-align: center">
+                                            <a href="#">
+                                                <span class="icon">
+                                                    <i class="fas fa-edit"></i>
+                                                </span>
+                                            </a>
+                                            <a href="#">
+                                                <span class="icon">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% else %}
+                <h5>Não existem fornecedores cadastrados!</h5>
+            {% endif %}
+
+        </div>
+    </section>
+{% endblock %}

@@ -1,14 +1,24 @@
 <!DOCTYPE html>
+
+{% load static %}
+
 <html lang="pt-br" data-bs-theme="light">
-    <body>
+	{% block head %}
+
+		{% include "head.html" %}
+
+	{% endblock %}
+
+<body>
         <section class="section bg-success p-2 bg-opacity-75">
             <div class="container">
                 <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
-                    <a class="navbar-brand" href="#">
-                        <img src="#" width="221" height="115">
+                    <a class="navbar-brand" href="{% url 'index' %}">
+                        <img src="{% static 'img/Carro.png' %}" width="221" height="115">
+
                     </a>
 					<div class="container-fluid">
-						<a class="navbar-brand" href="#">Início</a>
+						<a class="navbar-brand" href="{% url 'index' %}">Início</a>
 						<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 							data-bs-target="#navbarSupportedContent"
 							aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -34,7 +44,7 @@
 									</a>
 									<ul class="dropdown-menu">
 										<li><a class="dropdown-item" href="#">Cadastrar Fornecedor</a></li>
-										<li><a class="dropdown-item" href="#">Listar Fornecedores</a></li>
+										<li><a class="dropdown-item" href="{% url 'fornecedores' %}">Listar Fornecedores</a></li>
 									</ul>
 								</li>
                                 <li class="nav-item dropdown">
@@ -82,6 +92,13 @@
 					</div>
 				</nav>
             </div>
-        </section> 
+        </section>
+
+
+		{% block content %} {% endblock %}
+
+		{% block footer %}
+			{%  include "footer.html" %}
+		{% endblock %}
     </body>
 </html>
