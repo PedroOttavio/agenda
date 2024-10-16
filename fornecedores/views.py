@@ -1,5 +1,9 @@
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView
+from .forms import FornecedorModelForm
 from .models import Fornecedor
+
+
 
 # Create your views here.
 
@@ -15,3 +19,9 @@ class FornecedoresView(ListView):
 
         return qs
 
+
+class FornecedorAddView(CreateView):
+    model = Fornecedor
+    form_class = FornecedorModelForm
+    template_name = 'fornecedor_form.html'
+    success_url = reverse_lazy('fornecedores')
