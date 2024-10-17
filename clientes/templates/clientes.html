@@ -1,0 +1,88 @@
+{% extends 'principal.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block content %}
+
+
+<!--parei no slide 33-->
+
+
+<section class="section" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+        <div class="container">
+            <form action="" method="GET">
+                <div class="form-group row p-3">
+                    <label class="col-sm-2 col-form-label">Nome do cliente: </label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" name="buscar" value="{{ request.GET.buscar }}"
+                               placeholder="Digite o nome do cliente">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary">
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+            </form>
+                {% if object_list %}
+                <div class="card-body">
+                    <h3 class="text-center">Clientes Cadastrados</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-success">
+                                <th>Nome</th>
+                                <th>Fone</th>
+                                <th>E-mail</th>
+                                <th style="width: 100px; text-align: center">Ações</th>
+                            </thead>
+                            <tbody>
+                                {% for cliente in object_list %}
+                                    <tr>
+                                        <td> <a href="" data-bs-toggle="modal" data-bs-target="#modal{{cliente.id}}"> {{ cliente.nome }}</a> </td>
+                                        <td> {{cliente.fone}} </td>
+                                        <td> {{cliente.email}} </td>
+                                        <td style="text-align: center">
+                                            <div class="modal" tabindex="-1" id="modal{{cliente.id}}">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Cliente: {{ cliente.nome }} </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss = "modal" aria-label="Close"></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-body d-flex justify-content-center">
+                                                        <div>
+                                                            {% if cliente.foto.url is not empty %}
+                                                            <img src = "{{ cliente.foto.url }}" class="img-thumbnail" width="100" height="100" alt=""/>
+                                                            {% endif %}
+                                                            <h6> <strong>Fone: </strong>{{ cliente.fone }}</h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a href="{% url 'cliente_editar' cliente.pk %}">
+                                                <span class="icon">
+                                                    <i class="fas fa-edit"></i>
+                                                </span>
+                                            </a>
+                                            <a href="#">
+                                                <span class="icon">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        {% bootstrap_pagination object_list url="/clientes?page=1" size = "sm" %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+{% endblock %}
