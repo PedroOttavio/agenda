@@ -45,3 +45,10 @@ class ClienteUpdateView(SuccessMessageMixin, UpdateView):
     template_name = 'cliente_form.html'
     success_url = reverse_lazy('clientes')
     sucess_message = 'Cliente atualizado com sucesso!'
+
+class ClienteDeleteView(SuccessMessageMixin, DeleteView):
+    model = Cliente
+    form_class = ClienteModelForm
+    template_name = 'cliente_apagar.html'
+    success_url = reverse_lazy('clientes')
+    sucess_message = 'Cliente excluído com sucesso!'
