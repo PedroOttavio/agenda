@@ -1,0 +1,29 @@
+{% extends 'principal.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+
+    <div class="card shadow m-3 col-md-6 mx-auto">
+        <div class="card-body">
+            <div class="row">
+                <h3 class="text-center">Cadastro de Funcionario</h3>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    {% if object.foto.url is not empty %}
+                    <div class="col-2">
+                        <img src="{{ object.foto.url }}" class="img-thumbnail" width="100" height="100" alt=""/>
+                    </div>
+                    {% endif %}
+                 <div class="text-end">
+                     {% bootstrap_button button_type="submit" content="Salvar" %}
+                        <a href="{% url 'funcionarios' %}" class="btn btn-secondary text-white" type="button">
+                           <span class="text">Cancelar</span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
