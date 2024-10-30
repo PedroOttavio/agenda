@@ -1,0 +1,64 @@
+ {% extends 'principal.html' %}
+ {% load django_bootstrap5 %}
+ {% load static %}
+ {% block content %}
+
+<section class="section">
+        <div class="container">
+            <form action="" method="GET">
+                <div class="form-group row p-3">
+                    <label class="col-sm-2 col-form-label">Nome ou descrição do serviço: </label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" name="buscar" value="{{ request.GET.buscar }}"
+                               placeholder="Digite o nome ou a descrição do serviço">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary">
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+            </form>
+            
+                <div class="card-body">
+                    <h3 class="text-center">Serviços Cadastrados</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-success">
+                                <th>Nome</th>
+                                <th>Descrição</th>
+                                <th>Preço</th>
+                                <th>Produtos</th>
+                                <th style="width: 100px; text-align: center">Ações</th>
+                            </thead>
+                            <tbody>
+                               {% for servico in object_list %}
+                                    <tr>
+                                        <td> {{ servico.nome }} </td>
+                                        <td> {{ servico;descricao }} </td>
+                                        <td> {{ servico.preco }} </td>
+
+                                        <td style="text-align: center">
+                                             
+                                            <a href="{% url 'servico_editar' servico.pk %}">
+                                                <span class="icon">
+                                                    <i class="fas fa-edit"></i>
+                                                </span>
+                                            </a>
+                                            <a href="{% url 'servico_apagar' servico.pk %}">
+                                                <span class="icon">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% bootstrap_pagination object_list url="/servicos?page=1" size="sm" %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
