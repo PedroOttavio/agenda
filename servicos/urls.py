@@ -5,7 +5,7 @@ from .views import ServicosView, ServicosAddView, ServicosUpdateView, ServicosDe
 
 urlpatterns = [
     path('servicos/', ServicosView.as_view(), name='servicos'),
-    path('servico/adicionar', ServicosAddView.as_view(), name='servico-adicionar'),
+    path('servico/adicionar', ServicosAddView.as_view(), name='servico_adicionar'),
     path('<int:pk>/servico/editar', ServicosUpdateView.as_view(), name='servico_editar'),
     path('<int:pk>/servico/apagar', ServicosDeleteView.as_view(), name='servico_apagar'),
 ]

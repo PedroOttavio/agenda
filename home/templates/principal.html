@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+{% load static %}
+{% load django_bootstrap5 %}
+<html lang="pt-br" data-bs-theme="light">
+	{% block head %}
+        {% include "head.html" %}
+    {% endblock %}
+    <body>
+        <section class="section bg-success p-2 bg-opacity-75">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
+                    <a class="navbar-brand" href="{% url 'index' %}">
+                        <img src="{% static 'img/Carro.png' %}" width="221" height="115">
+                    </a>
+					<div class="container-fluid">
+						<a class="navbar-brand" href="{% url 'index' %}">Início</a>
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+							data-bs-target="#navbarSupportedContent"
+							aria-controls="navbarSupportedContent" aria-expanded="false"
+							aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarCliente" role="button"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										Clientes
+									</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="{% url 'cliente_adicionar' %}">Cadastrar Cliente</a></li>
+										<li><a class="dropdown-item" href="{% url 'clientes' %}">Listar Clientes</a></li>
+									</ul>
+								</li>
+                                <li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarFornecedor" role="button"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										Fornecedores
+									</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="{% url 'fornecedor_adicionar' %}">Cadastrar Fornecedor</a></li>
+										<li><a class="dropdown-item" href="{% url 'fornecedores' %}">Listar Fornecedores</a></li>
+									</ul>
+								</li>
+                                <li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarFuncionario" role="button"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										Funcionários
+									</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="{% url 'funcionario_adicionar' %}">Cadastrar Funcionário</a></li>
+										<li><a class="dropdown-item" href="{% url 'funcionarios' %}">Listar Funcionários</a></li>
+									</ul>
+								</li>
+                                <li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarServico" role="button"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										Serviços
+									</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="{% url 'servico_adicionar' %}">Cadastrar Serviço</a></li>
+										<li><a class="dropdown-item" href="{% url 'servicos' %}">Listar Serviços</a></li>
+									</ul>
+								</li>
+                                <li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarProduto" role="button"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										Produtos
+									</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="{% url 'produto_adicionar' %}">Cadastrar Produto</a></li>
+										<li><a class="dropdown-item" href="{% url 'produtos' %}">Listar Produtos</a></li>
+									</ul>
+								</li>
+                                <li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarAgendamento" role="button"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										Agendamentos
+									</a>
+									<ul class="dropdown-menu">
+										<li><a class="dropdown-item" href="#">Cadastrar Agendamento</a></li>
+										<li><a class="dropdown-item" href="#">Listar Agendamentos</a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+            </div>
+        </section>
+
+		{% if messages %}
+			<div class="container p-3">
+				{% bootstrap_messages %}
+			</div>
+		{% endif %}
+
+		{% block content %} {% endblock %}
+
+        {% block footer %}
+            {% include "footer.html" %}
+        {% endblock %}
+    </body>
+</html>

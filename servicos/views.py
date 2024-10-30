@@ -1,8 +1,7 @@
-from django.contrib.messages.context_processors import messages
+from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
@@ -35,7 +34,7 @@ class ServicosView(ListView):
 class ServicosAddView(SuccessMessageMixin, CreateView):
     model = Servico
     form_class = ServicoModelForm
-    template_name = 'servicos_form.html'
+    template_name = 'servico_form.html'
     success_url = reverse_lazy('servicos')
     success_message = 'Serviço cadastrado com sucesso!'
 
@@ -43,13 +42,13 @@ class ServicosAddView(SuccessMessageMixin, CreateView):
 class ServicosUpdateView(SuccessMessageMixin, UpdateView):
     model = Servico
     form_class = ServicoModelForm
-    template_name = 'servicos_form.html'
+    template_name = 'servico_form.html'
     success_url = reverse_lazy('servicos')
     success_message = 'Serviço alterado com sucesso!'
 
 class ServicosDeleteView(SuccessMessageMixin, DeleteView):
     model = Servico
-    template_name = 'servicos_apagar.html'
+    template_name = 'servico_apagar.html'
     success_url = reverse_lazy('servicos')
     success_message = 'Serviço alterado com sucesso'
 

@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </form>
-            
+            {% if object_list %}
                 <div class="card-body">
                     <h3 class="text-center">Serviços Cadastrados</h3>
                     <div class="table-responsive">
@@ -35,7 +35,7 @@
                                {% for servico in object_list %}
                                     <tr>
                                         <td> {{ servico.nome }} </td>
-                                        <td> {{ servico;descricao }} </td>
+                                        <td> {{ servico.descricao }} </td>
                                         <td> {{ servico.preco }} </td>
 
                                         <td style="text-align: center">
