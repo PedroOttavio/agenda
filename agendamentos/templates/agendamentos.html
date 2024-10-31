@@ -1,0 +1,84 @@
+{% extends 'principal.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block content %}
+
+    <section class="section">
+        <div class="container">
+            <form action="" method="GET">
+                <div class="form-group row p-3">
+                    <div class="col-sm-5">
+                        {% bootstrap_field form.cliente layout='horizontal' %}
+                        </div>
+                    <div class="col-sm-5">
+                        {% bootstrap_field form.funcionario layout='horizontal' %}
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary">
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+            </form>
+            {% if object_list %}
+                <div class="card-body">
+                    <h3 class="text-center">Agendamentos Cadastrados</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-success">
+                                <th>Horário</th>
+                                <th>Cliente</th>
+                                <th>Funcionário</th>
+                                <th>Serviços</th>
+                                <th style="width: 100px; text-align: center">Ações</th>
+                            </thead>
+                            <tbody>
+
+                            {% for agendamento in object_list %}
+                                    <tr>
+                                        <td> {{ agendamento.horario }} </td>
+                                        <td> {{ agendamento.cliente }} </td>
+                                        <td> {{ agendamento.funcionario }} </td>
+
+                                        
+                                        <td style="text-align: center">
+                                                <a href="{% url 'agendamento_editar' agendamento.pk %}">
+                                                    <span class="icon">
+                                                        <i class="fas fa-edit"></i>
+                                                    </span>
+                                                </a>
+                                                <a href="{% url 'agendamento_apagar' agendamento.pk %}">
+                                                    <span class="icon">
+                                                        <i class="far fa-trash-alt"></i>
+                                                    </span>
+                                                </a>
+
+                                                <span class="icon">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </span>
+
+                                                <span class="icon">
+                                                    <i class="fas fa-edit"></i>
+                                                </span>
+
+                                                <span class="icon">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </span>
+                                            
+                                            <a href="#">
+                                                <span class="icon">
+                                                    <i class="fas fa-check-circle"></i>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% bootstrap_pagination object_list url="/agendamentos?page=1" size="sm" %}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
