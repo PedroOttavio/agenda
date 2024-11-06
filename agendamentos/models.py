@@ -1,6 +1,7 @@
 from django.db import models
 
 from clientes.models import Cliente
+from ordemservicos.models import OrdemServicos
 
 
 # Create your models here.
@@ -11,6 +12,11 @@ class Agendamento(models.Model):
 
     funcionario = models.ForeignKey('funcionarios.Funcionario', verbose_name='Funcionario', help_text='Nome do Funcionario', on_delete= models.PROTECT)
 
+    servico = models.ManyToManyField('servicos.Servico', verbose_name='Serviço', through='ordemservicos.OrdemServicos')
+
+    @property
+    def servicos(self):
+        return OrdemServicos.objects.filter(agendamento=self)
 
     class Meta:
         verbose_name = 'Agendamento'
@@ -18,3 +24,4 @@ class Agendamento(models.Model):
 
     def __str__(self):
         return f'Cliente:{self.cliente}'
+

@@ -40,8 +40,23 @@
                                         <td> {{ agendamento.cliente }} </td>
                                         <td> {{ agendamento.funcionario }} </td>
 
+                                        <td>
+                                            {% for servico in agendamento.servicos %}
+                                                {% if forloop.last %}
+                                                    {{ servico }} ({{ servico.get_situacao_display }})
+                                                {% else %}
+                                                    {{ servico }} ({{ servico.get_situacao_display }}),
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
                                         
                                         <td style="text-align: center">
+                                                  <a href="{% url 'agendamento_inLine' agendamento.pk %}">
+                                                    <span class="icon">
+                                                        <i class="fas fa-edit"></i>
+                                                    </span>
+                                                </a>
+
                                                 <a href="{% url 'agendamento_editar' agendamento.pk %}">
                                                     <span class="icon">
                                                         <i class="fas fa-edit"></i>

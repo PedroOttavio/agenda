@@ -2,12 +2,14 @@ from lib2to3.fixes.fix_input import context
 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
 from django.contrib import messages #resolve o problema do info
+from django.views.generic.base import TemplateResponseMixin
+
 from .models import Agendamento
-from .forms import AgendamentoListForm, AgendamentoModelForm
+from .forms import AgendamentoListForm, AgendamentoModelForm, AgendamentosServicoInLine
 
 
 # Create your views here.
@@ -37,12 +39,13 @@ class AgendamentosView(ListView):
                     qs = qs.filter(cliente=cliente)
                 if funcionario:
                     qs = qs.filter(funcionario=funcionario)
-            if qs.count() > 0:
-                paginator = Paginator(qs, 1)
-                listagem = paginator.get_page(self.request.GET.get('page'))
-                return listagem
-            else:
-                return messages.info(self.request, 'Não existem agendamentos cadastrados!')
+        if qs.count() > 0:
+            print(qs)
+            paginator = Paginator(qs, 1)
+            listagem = paginator.get_page(self.request.GET.get('page'))
+            return listagem
+        else:
+            return messages.info(self.request, 'Não existem agendamentos cadastrados!')
 
 class AgendamentoAddView(SuccessMessageMixin, CreateView):
     model = Agendamento
@@ -63,3 +66,25 @@ class AgendamentoDeleteView(SuccessMessageMixin, DeleteView):
     template_name = 'agendamento_apagar.html'
     success_url = reverse_lazy('agendamentos')
     success_message = 'Agendamento apagado com sucesso!'
+
+
+class AgendamentoInLineEditView(TemplateResponseMixin, View):
+    template_name = 'agendamento_form_inLine.html'
+
+    def get_formset(self, data=None):
+        return AgendamentosServicoInLine(instance=self.agendamento, data=data)
+
+    def dispatch(self, request, pk):
+        self.agendamento = get_object_or_404(Agendamento, id=pk)
+        return super().dispatch(request, pk)
+
+    def get(self, request, *args, **kwargs):
+        formset = self.get_formset()
+        return self.render_to_response({'agendamento': self.agendamento, 'formset': formset})
+
+    def post(self, request, *args, **kwargs):
+        formset = self.get_formset(data=request.POST)
+        if formset.is_valid():
+            formset.save()
+            return redirect('agendamentos')
+        return self.render_to_response({'agendamento': self.agendamento, 'formset':formset})

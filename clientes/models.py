@@ -29,4 +29,4 @@ class Cliente(Pessoa):
         verbose_name_plural = 'Clientes'
 
     def __str__(self):
-        return self().nome
+        return self.nome
