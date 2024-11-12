@@ -40,18 +40,15 @@
                                         <td> {{ agendamento.horario }} </td>
                                         <td> {{ agendamento.cliente }} </td>
                                         <td> {{ agendamento.funcionario }} </td>
-
                                         <td>
                                             {% for servico in agendamento.servicos %}
-                                                {% if forloop.last %}
-                                                    {{ servico }} ({{ servico.get_situacao_display }})
-                                                {% else %}
-                                                    {{ servico }} ({{ servico.get_situacao_display }}),
-                                                {% endif %}
+                                                    {{ servico }} - R$ {{ servico.preco }} ({{ servico.get_situacao_display }}<br>
                                             {% endfor %}
+                                            <strong>Valor total: {{ agendamento.valor }}</strong>
                                         </td>
                                         
                                         <td style="text-align: center">
+                                            {% if agendamento.status == 'A' %}
                                                   <a href="{% url 'agendamento_inLine' agendamento.pk %}">
                                                     <span class="icon">
                                                         <i class="fas fa-edit"></i>
@@ -68,6 +65,7 @@
                                                         <i class="far fa-trash-alt"></i>
                                                     </span>
                                                 </a>
+                                            {% else %}
 
                                                 <span class="icon">
                                                     <i class="fas fa-pencil-alt"></i>
@@ -80,12 +78,13 @@
                                                 <span class="icon">
                                                     <i class="far fa-trash-alt"></i>
                                                 </span>
-                                            
+                                            {% endif %}
                                             <a href="#">
                                                 <span class="icon">
                                                     <i class="fas fa-check-circle"></i>
                                                 </span>
                                             </a>
+
                                         </td>
                                     </tr>
                             {% endfor %}
