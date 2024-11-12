@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.functions import Upper
+
 
 # Create your models here.
 
@@ -12,7 +14,7 @@ class Fornecedor(models.Model):
     class Meta:
         verbose_name = 'Fornecedor'
         verbose_name_plural = 'Fornecedores'
-
+        ordering = [Upper('nome')]
 
 
     def __str__(self):

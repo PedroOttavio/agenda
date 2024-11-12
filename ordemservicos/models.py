@@ -31,3 +31,27 @@ class OrdemServicos(models.Model):
 
     def __str__(self):
         return self.servico.nome
+
+    def calcular_valor_ordem(self):
+        valor_total = 0
+        qs = OrdemServicos.objects.filter(agendamento=self.agendamento)
+        for item in qs:
+            if item.situacao == 'C':
+                valor_total += item.preco
+        self.agendamento.valor = valor_total
+        self.agendamento.save()
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.preco = self.servico.preco
+        super().save(force_insert=False, force_update=False, using=None, update_fields=None)
+        self.calcular_valor_ordem()
+
+    def delete(self, using=None, keep_parents=False):
+        super().delete(using=None, keep_parents=False)
+        self.calcular_valor_ordem()
+
+    class Meta:
+        verbose_name = 'Serviço realizado'
+        verbose_name_plural = 'Serviços realizados'
+
+        constraints = [models.UniqueConstraint(fields=['agendamento', 'servico'], name='constraint_agendamento')]

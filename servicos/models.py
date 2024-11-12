@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.functions import Upper
 
 from produtosservico.models import ProdutosServico
 
@@ -20,6 +21,8 @@ class Servico(models.Model):
     class Meta:
         verbose_name = 'Serviço'
         verbose_name_plural = 'Serviços'
+        ordering = [Upper('nome')]
+
 
     def __str__(self):
         return self.nome
